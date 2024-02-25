@@ -1,0 +1,243 @@
+{% extends 'layouts/layout.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="import-question-success">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">View exam</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-1">
+              <table>
+                <tr>
+                  <td>Subject:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.subject.subject_code }}
+                    - {{ subject_exam.subject.subject_name }}</td>
+                </tr>
+                <tr>
+                  <td>Exam ID:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_id }}</td>
+                </tr>
+                <tr>
+                  <td>Exam code:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_code }}</td>
+                </tr>
+                <tr>
+                  <td>Number of quiz:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.question_count }} question</td>
+                </tr>
+                <tr>
+                  <td>Exam duration:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_duration }} minus</td>
+                </tr>
+                <tr>
+                  <td>Người tạo:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.user.first_name }} {{ subject_exam.exam.user.last_name }}
+                    ({{ subject_exam.exam.user.email }})
+                  </td>
+                </tr>
+                <tr>
+                  <td>Date:</td>
+                  <td class="ps-3">
+                    <i class="bi bi-calendar3-week fa-fw me-2"></i>{{ subject_exam.exam.created_at|date:"d/m/Y" }}
+                    <i class="far fa-clock fa-fw ms-1 me-1"></i>{{ subject_exam.exam.created_at|time:"H:i" }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="flex mb-1">
+            <h1 class="sub-title fix-mb-title fix-mt-title">Question list of exam</h1>
+            <div>
+              <button type="submit" class="btn btn-md btn-primary me-2" onclick="viewExamMode(1)">
+                <i class="fas fa-border-all text-info"></i>Table mode
+              </button>
+              <button type="submit" class="btn btn-md btn-primary" onclick="viewExamMode(2)">
+                <i class="fas fa-list-ul text-info"></i>View mode
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="table-mode">
+        <div class="panel">
+          <div class="row datatable">
+            <div class="col-lg-12">
+              <table id="question-table" class="table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center" style="width: 130px !important;">Question ID<i
+                      class="fas fa-sort fa-size"></i></th>
+                  <th class="text-center" style="max-width: 400px">Question<i class="fas fa-sort fa-size"></i></th>
+                  <th class="text-center">Image</th>
+                  <th class="text-end">Chapter<i class="fas fa-sort fa-size"></i></th>
+                  <th class="text-end" style="width: 120px !important;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for q in questions %}
+                  <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">{{ q.question_id }}</td>
+                    <td class="text-start">{{ q.question }}</td>
+                    <th class="text-center">{% if q.image == 'no_image' %}-{% else %}
+                      <i class="fas fa-check text-success"></i>{% endif %}</th>
+                    <td class="text-end">{{ q.unit }}</td>
+                    <td class="text-end">
+                      <a href="javascript:void(0)"
+                         onclick="viewQuestionInExamTableMode({{ subject_exam.exam.exam_id }}, {{ q.question_id }})"
+                         class="text-info">
+                        <i class="far fa-eye" data-bs-placement="top" data-bs-toggle="tooltip" title="View detail"></i>
+                      </a>
+                      <a href="{% url 'view_edit_question' question_id=q.question_id %}" class="text-success ps-3">
+                        <i class="fas fa-pencil-alt" data-bs-placement="top" data-bs-toggle="tooltip"
+                           title="Edit question"></i>
+                      </a>
+                      <a href="javascript:void(0)"
+                         onclick="confirmDeleteQuestionInExam({{ subject_exam.exam.exam_id }}, {{ q.question_id }})"
+                         class="text-danger ps-3">
+                        <i class="far fa-trash-alt" data-bs-placement="top" data-bs-toggle="tooltip"
+                           title="Delete question"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="detail-mode" style="display: none">
+        {% for question in questions %}
+          <div class="panel-text">
+            <div class="row">
+              <div class="col-12 {% if question.image != 'no_image' %}col-lg-7{% else %}col-lg-12{% endif %}">
+                <div class="ps-1">
+                  <table class="w-100 view-exam-question-table">
+                    <tr>
+                      <td>Question no:</td>
+                      <td class="ps-2">{{ forloop.counter }}</td>
+                    </tr>
+                    <tr>
+                      <td>Question ID:</td>
+                      <td class="ps-2">{{ question.question_id }}</td>
+                    </tr>
+                    <tr>
+                      <td>Question:</td>
+                      <td class="ps-2 color-tan">{{ question.question }}</td>
+                    </tr>
+                    <tr>
+                      <td>Answer list:</td>
+                      <td class="ps-2">
+                        <ul>
+                          {% for k, v in question.answer_list.items %}
+                            <li class="{% if k|exists:question.answer %}text-success{% endif %}">{{ k | upper }}: {{ v }}</li>
+                          {% endfor %}
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Mark:</td>
+                      <td class="ps-2">{{ question.mark }}</td>
+                    </tr>
+                    <tr>
+                      <td>Unit:</td>
+                      <td class="ps-2">{{ question.unit }}</td>
+                    </tr>
+                    <tr>
+                      <td style="width: 90px">Mix choices:</td>
+                      <td class="ps-2">{{ question.mix_choices }}</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+              {% if question.image != 'no_image' %}
+                <div class="col-12 col-lg-5" style="padding-top: 12px">
+                  <a href="javascript:void(0)" onclick="viewImage('{{ question.image }}')">
+                    <img src="/media/images/{{ question.image }}" alt="" class="pe-1"
+                         style="width: 100%; border-radius: 12px">
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}
+
+{% block modal %}
+  <!-- Modal View Image -->
+  <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewQuestionInExamModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewImageModalLabel">Image</h5>
+          <span type="button" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg" style="font-size: 22px;"></i></span>
+        </div>
+        <div class="modal-body">
+          <div id="image-view">
+            confirm-modal-content
+          </div>
+        </div>
+        <div class="modal-footer" style="padding: 10px">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="viewQuestionInExamModal" tabindex="-1" aria-labelledby="viewQuestionInExamModalLabel"
+       aria-hidden="true">
+    <div id="modal-dialog-size" class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Question detail</h5>
+        </div>
+        <div class="modal-body">
+          <div id="view-question-in-exam"></div>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock modal %}
+
+{% block javascript %}
+  <script src="{% static 'assets/js/datatables/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'assets/js/datatables/datatables.vietnamese.js' %}"></script>
+
+  <!-- JavaScript to trigger the toast -->
+  <script>
+    {% if delete_question_in_exam_success %}
+      document.getElementById('toast-success-content').innerText = 'Delete question successfully!';
+      showToast('toast-success');
+    {% endif %}
+  </script>
+{% endblock javascript %}

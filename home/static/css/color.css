@@ -1,0 +1,193 @@
+@charset "utf-8";
+
+/* COLORS MODE ===================================================================================== */
+
+html[data-theme='light'] {
+  /* switch-theme ------------------------------------ */
+  --switch-color: #DCDFE6;
+  /* background-color -------------------------------- */
+  --body-background-color: #F0F2F5;
+  --primary-background-color: #FFFFFF;
+  --secondary-background-color: #F0F2F5;
+  /* border-color ------------------------------------ */
+  --primary-border-color: transparent;
+  --secondary-border-color: #E4E6EB;
+  --third-border-color: #D5D6DB;
+  /* text-color -------------------------------------- */
+  --primary-text: #050505;
+  --secondary-text: #65676B;
+  --link-text: #0d6efd;
+  --placeholder-text: #aaaaaa;
+  /* color ------------------------------------------- */
+  --blue: #0d6efd;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #d63384;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #52b76c;
+  --green-deep: #198754;
+  --teal: #20c997;
+  --cyan: #0dcaf0;
+  --black: #000;
+  --white: #fff;
+  --gray: #6c757d;
+  --tan: #cc9d57;
+  /* icon-color -------------------------------------- */
+  --primary-icon-color: #B0B3B8;
+  --secondary-icon-color: #E4E6EB;
+  /* shadow-color ------------------------------------ */
+  --shadow-1: rgb(0 0 0 / 10%);
+  --shadow-2: rgb(0 0 0 / 20%);
+  --shadow-inset: rgb(255 255 255 / 50%);
+  --shadow-button: rgb(228 230 235 / 55%);
+  /* button-background-color ------------------------- */
+  --primary-button-background-color: #FFFFFF;
+  --secondary-button-background-color: #E4E6EB;
+  --third-button-background-color: #D5D6DB;
+  --label-button-background-color: #DCDFE6;
+  /* navbar-button-background-color ------------------ */
+  --navbar-button-background-color: #DCDFE6;
+  /* sidebar-link-background-color-hover ------------- */
+  --link-primary-button-background-color: #F2F2F2;
+  --link-secondary-button-background-color: #F2F2F2;
+  /* icon-circle-background-color -------------------- */
+  --icon-circle-background-color: #E4E6EB;
+}
+
+html[data-theme='dark'] {
+  /* switch-theme ------------------------------------ */
+  --switch-color: #0d6efd;
+  /* background-color -------------------------------- */
+  --body-background-color: #18191A;
+  --primary-background-color: #242526;
+  --secondary-background-color: #3A3B3C;
+  /* border-color ------------------------------------ */
+  --primary-border-color: transparent;
+  --secondary-border-color: #3A3B3C;
+  --third-border-color: #4E4F50;
+  /* text-color -------------------------------------- */
+  --primary-text: #E4E6EB;
+  --secondary-text: #B0B3B8;
+  --link-text: #0d6efd;
+  --placeholder-text: #666666;
+  /* color ------------------------------------------- */
+  --blue: #0d6efd;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #d63384;
+  --red: #dc3545;
+  --orange: #fd7e14;
+  --yellow: #ffc107;
+  --green: #52b76c;
+  --green-deep: #198754;
+  --teal: #20c997;
+  --cyan: #0dcaf0;
+  --black: #000;
+  --white: #fff;
+  --gray: #6c757d;
+  --tan: #c7af8b;
+  /* icon-color -------------------------------------- */
+  --primary-icon-color: #B0B3B8;
+  --secondary-icon-color: #E4E6EB;
+  /* shadow-color ------------------------------------ */
+  --shadow-1: rgb(0 0 0 / 10%);
+  --shadow-2: rgb(0 0 0 / 20%);
+  --shadow-inset: rgb(255 255 255 / 5%);
+  --shadow-button: rgb(58 59 60 / 55%);
+  /* button-background-color ------------------------- */
+  --primary-button-background-color: #242526;
+  --secondary-button-background-color: #3A3B3C;
+  --third-button-background-color: #4E4F50;
+  --label-button-background-color: #3A3B3C;
+  /* button-background-color ------------------------- */
+  --navbar-button-background-color: #3A3B3C;
+  /* sidebar-link-background-color-hover ------------- */
+  --link-primary-button-background-color: #242526;
+  --link-secondary-button-background-color: #3A3B3C;
+  /* icon-circle-background-color -------------------- */
+  --icon-circle-background-color: #4E4F50;
+}
+
+
+/* COLORS TEXT ===================================================================================== */
+
+.primary-text {
+  color: var(--primary-text);
+}
+
+.secondary-text {
+  color: var(--secondary-text);
+}
+
+.link-text {
+  color: var(--link-text) !important;
+}
+
+.color-blue {
+  color: var(--blue) !important;
+}
+
+.color-indigo {
+  color: var(--indigo) !important;
+}
+
+.color-purple {
+  color: var(--purple) !important;
+}
+
+.color-pink {
+  color: var(--pink) !important;
+}
+
+.color-red {
+  color: var(--red) !important;
+}
+
+.color-orange {
+  color: var(--orange) !important;
+}
+
+.color-yellow {
+  color: var(--yellow) !important;
+}
+
+.color-green {
+  color: var(--green) !important;
+}
+
+.color-green-deep {
+  color: var(--green-deep) !important;
+}
+
+.color-teal {
+  color: var(--teal) !important;
+}
+
+.color-cyan {
+  color: var(--cyan) !important;
+}
+
+.color-black {
+  color: var(--black) !important;
+}
+
+.color-white {
+  color: var(--white) !important;
+}
+
+.color-gray {
+  color: var(--gray) !important;
+}
+
+.color-tan {
+  color: var(--tan) !important;
+}
+
+
+/* BACKGROUND COLORS =============================================================================== */
+
+.primary-background {
+  background-color: var(--primary-background-color);
+}

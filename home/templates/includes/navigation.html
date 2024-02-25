@@ -1,0 +1,73 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+  <div class="container-fluid">
+    <a class="navbar-brand mr-auto" href="{% url 'index' %}">Quiz Online System</a>
+
+    <div class="navbar-btn-group">
+      <ul class="m-0 p-0">
+        <li class="navbar-btn dropdown pointer-events-none">
+            <a class="dropdown-toggle" href="javascript:void(0)" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <!-- <i class="fas fa-caret-down m-0 fa-fw"></i> -->
+              <i class="far fa-user m-0 fa-fw"></i>
+            </a>
+            <ul class="dropdown-menu navbar-dropdown" aria-labelledby="userDropdown">
+              {% if request.user.is_authenticated %}
+                <div class="username">
+                  <div>
+                    <i class="far fa-user fa-fw"></i>
+                  </div>
+                  <div>
+                    <span>{{ request.user.first_name }} {{ request.user.last_name }}</span>
+                  </div>
+                </div>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="far fa-eye fa-fw"></i>Trang cá nhân</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt fa-fw"></i>Đăng xuất</a>
+              {% else %}
+                <a class="dropdown-item" href="{% url 'login' %}"><i class="fas fa-sign-in-alt fa-fw"></i>Đăng nhập</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#"><i class="far fa-edit fa-fw"></i>Đăng ký tài khoản</a>
+              {% endif %}
+            </ul>
+          </li>
+        <li class="navbar-btn dropdown pointer-events-none">
+          <a class="dropdown-toggle" href="javascript:void(0)" id="funtionDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-caret-down m-0 fa-fw"></i>
+          </a>
+          <ul class="dropdown-menu navbar-dropdown" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="#"><i class="far fa-comment fa-fw"></i>Đóng góp ý kiến</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#"><i class="far fa-question-circle fa-fw"></i>Trợ giúp & hỗ trợ</a>
+          </ul>
+        </li>
+        <li class="navbar-btn btn-sidebar-menu">
+          <button id="btn-open-sidebar" class="navbar-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false" aria-controls="sidebar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <!-- Start: Sidebar -->
+    <div id="sidebar" class="sidebar">
+      <ul class="nav navbar-nav menu">
+        <li>
+          <div class="switch-theme">
+            <div>
+              <span class="label-theme"><i class="fas fa-moon fa-fw"></i>Dark mode</span>
+            </div>
+            <div class="btn-switch-theme">
+              <input class="switch-button" type="checkbox" id="switch" />
+              <label for="switch"></label>
+            </div>
+          </div>
+        </li>
+        <li><a href="#"><i class="far fa-file-code fa-fw"></i>SQL Formatter</a></li>
+      </ul>
+    </div>
+    <!-- End: Sidebar -->
+  </div>
+</nav>

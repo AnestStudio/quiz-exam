@@ -1,0 +1,133 @@
+{% extends 'layouts/layout.html' %}
+{% load custom_filters %}
+{% load static %}
+
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="import-question-success">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Schedule Exam Detail</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-1">
+              <table>
+                <tr>
+                  <td>Subject:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.subject.subject_code }}
+                    - {{ subject_exam.subject.subject_name }}</td>
+                </tr>
+                <tr>
+                  <td>Exam ID:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_id }}</td>
+                </tr>
+                <tr>
+                  <td>Exam code:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_code }}</td>
+                </tr>
+                <tr>
+                  <td>Number of quiz:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.question_count }} question</td>
+                </tr>
+                <tr>
+                  <td>Exam duration:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.exam_duration }} minus</td>
+                </tr>
+                <tr>
+                  <td>Người tạo:</td>
+                  <td class="ps-3 pb-1">{{ subject_exam.exam.user.first_name }} {{ subject_exam.exam.user.last_name }}
+                    ({{ subject_exam.exam.user.email }})
+                  </td>
+                </tr>
+                <tr>
+                  <td>Date:</td>
+                  <td class="ps-3">
+                    <i class="bi bi-calendar3-week fa-fw me-2"></i>{{ subject_exam.exam.created_at|date:"d/m/Y" }}
+                    <i class="far fa-clock fa-fw ms-1 me-1"></i>{{ subject_exam.exam.created_at|time:"H:i:s" }}
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h1 class="sub-title fix-mb-title fix-mt-title">Time list</h1>
+        </div>
+      </div>
+
+      <div class="panel pt-1">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-1">
+              <table class="table mb-0" cellspacing="0" width="100%">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Start time<i class="fas fa-sort fa-size"></i></th>
+                    <th class="text-center">End time<i class="fas fa-sort fa-size"></i></th>
+                    <th class="text-center">Creator</th>
+                    <th class="text-end" style="width: 120px !important;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for exam_schedule in exam_schedules %}
+                  <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">{{ exam_schedule.schedule_id }}</td>
+                    <td class="text-center">
+                      <i class="bi bi-calendar3-week fa-fw me-2"></i>{{ exam_schedule.start_time|date:"d/m/Y" }}
+                      <i class="far fa-clock fa-fw ms-1 me-1"></i>{{ exam_schedule.start_time|time:"H:i:s" }}
+                    </td>
+                    <td class="text-center">
+                      <i class="bi bi-calendar3-week fa-fw me-2"></i>{{ exam_schedule.end_time|date:"d/m/Y" }}
+                      <i class="far fa-clock fa-fw ms-1 me-1"></i>{{ exam_schedule.end_time|time:"H:i:s" }}
+                    </td>
+                    <td class="ps-2 color-tan text-end">{{ exam_schedule.user.first_name|add:" "|add:exam_schedule.user.last_name|add:" ("|add:exam_schedule.user.email|add:")"}} </td>
+                    <td class="text-end">
+                      <a href="{% url 'view_edit_schedule_exam' schedule_exam_id=exam_schedule.schedule_id %}" class="text-success ps-3">
+                        <i class="fas fa-pencil-alt" data-bs-placement="top" data-bs-toggle="tooltip"
+                           title="Edit exam schedule"></i>
+                      </a>
+                      <a href="javascript:void(0)" onclick="confirmDeleteScheduleInExam({{ exam_schedule.exam_id }}, {{ exam_schedule.schedule_id }})"
+                         class="text-danger ps-3">
+                        <i class="far fa-trash-alt" data-bs-placement="top" data-bs-toggle="tooltip"
+                           title="Delete exam schedule"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}
+{% block javascript %}
+  <script>
+      {% if update_schedule_exam_success %}
+          document.getElementById('toast-success-content').innerText = 'Update schedule exam successfully!';
+          showToast('toast-success');
+      {% endif %}
+      {% if delete_schedule_exam_success %}
+          document.getElementById('toast-success-content').innerText = 'Delete schedule exam successfully!';
+          showToast('toast-success');
+      {% endif %}
+  </script>
+{% endblock javascript %}

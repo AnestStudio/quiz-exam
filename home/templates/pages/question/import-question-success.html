@@ -1,0 +1,93 @@
+{% extends 'layouts/layout.html' %}
+{% load custom_filters %}
+{% load static %}
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="import-question-success">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Import question</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel pt-2">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-1">
+              <h4 class="text-success">{{ message }}</h4>
+              <table>
+                <tr>
+                  <td>Subject:</td>
+                  <td class="ps-3">{{ data.subject }}</td>
+                </tr>
+                <tr>
+                  <td>Number of quiz:</td>
+                  <td class="ps-3">{{ data.number_of_quiz }}</td>
+                </tr>
+                <tr>
+                  <td>Lecturer:</td>
+                  <td class="ps-3">{{ data.lecturer }}</td>
+                </tr>
+                <tr>
+                  <td>Date:</td>
+                  <td class="ps-3">{{ data.date }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <h1 class="sub-title fix-mb-title fix-mt-title">Question list</h1>
+        </div>
+      </div>
+
+      {% for question in data.questions %}
+      <div class="panel-text">
+        <div class="row">
+          <div class="col-12">
+            <div class="px-1">
+              <table class="w-100">
+                <tr>
+                  <td>Question:</td>
+                  <td class="ps-2 color-tan">{{ question.question }}</td>
+                </tr>
+                <tr>
+                  <td>Answer list:</td>
+                  <td class="ps-2">
+                    <ul>
+                      {% for k, v in question.answer_list.items %}
+                        <li class="{% if k|exists:question.answer %}text-success{% endif %}">{{ k | upper }}: {{ v }}</li>
+                      {% endfor %}
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Mark:</td>
+                  <td class="ps-2">{{ question.mark }}</td>
+                </tr>
+                <tr>
+                  <td>Unit:</td>
+                  <td class="ps-2">{{ question.unit }}</td>
+                </tr>
+                <tr>
+                  <td style="width: 90px">Mix choices:</td>
+                  <td class="ps-2">{{ question.mix_choices }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+{% endblock sub-content %}

@@ -1,0 +1,53 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="generate-exam">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Edit schedule the exam</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <form class="row panel-form mx-0" method="post" action="/exam/schedule/edit" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="schedule_exam_id" value="{{ exam_schedule.schedule_id }}">
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset class="bg-dark-ui">
+            <legend>Subject</legend>
+            <input type="text" class="form-control" name="subject_name" value="{{ subject_name }}" readonly>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>Exam code</legend>
+            <input type="text" class="form-control" name="exam_code" value="{{ exam_schedule.exam.exam_code }}" readonly>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>Start date - time</legend>
+            <input type="datetime-local" class="form-control" name="start_date" value="{{ exam_schedule.start_time|date:'Y-m-d\TH:i' }}">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>End date - time</legend>
+            <input type="datetime-local" class="form-control" name="end_date" value="{{ exam_schedule.end_time|date:'Y-m-d\TH:i' }}">
+          </fieldset>
+        </div>
+        <div class="col-md-12 text-end mt-2">
+          <button type="submit" class="btn btn-lg btn-secondary" name="save">
+            <i class="fas fa-check text-success"></i>Submit
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}

@@ -1,0 +1,122 @@
+{% extends 'layouts/layout.html' %}
+{% load custom_filters %} 
+{% load static %} 
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="add-new-question">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">View question <span class="text-info">#{{ question.question_id }}</span></h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel pt-1">
+        <div class="row pt-0 ps-1">
+        {% if question.image != 'no_image' %}
+          <div class="col-12 col-lg-5" style="padding-top: 16px">
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#viewImageModal">
+              <img src="/media/images/{{ question.image }}" alt="" style="width: 100%; border-radius: 12px">
+            </a>
+          </div>
+        {% endif %}
+          <div class="pt-2 col-12 {% if question.image != 'no_image' %}col-lg-7 ps-3{% else %}col-lg-12{% endif %}">
+            <table class="w-100 view-question-table">
+              <tr>
+                <td>Question ID:</td>
+                <td class="ps-3">{{ question.question_id }}</td>
+              </tr>
+              <tr>
+                <td>Subject:</td>
+                <td class="ps-3">{{ question.subject.subject_code }} - {{ question.subject.subject_name }}</td>
+              </tr>
+              <tr>
+                <td>Question:</td>
+                <td class="ps-3 color-tan">{{ question.question }}</td>
+              </tr>
+              <tr>
+                <td>Answer list:</td>
+                <td class="ps-3">
+                  <ul>
+                    {% for k, v in question.answer_list.items %}
+                      <li class="{% if k|exists:question.answer %}text-success{% endif %}">{{ k | upper }}: {{ v }}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Mark:</td>
+                <td class="ps-3">{{ question.mark }}</td>
+              </tr>
+              <tr>
+                <td>Unit:</td>
+                <td class="ps-3">{{ question.unit }}</td>
+              </tr>
+              <tr>
+                <td style="width: 90px">Mix choices:</td>
+                <td class="ps-3">{{ question.mix_choices }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 text-end pt-3">
+            <a href="javascript:void(0)"
+               onclick="confirmDeleteQuestion({{ question.question_id }})"
+               class="btn btn-lg btn-secondary me-2">
+              <i class="far fa-trash-alt text-danger"></i>Delete question
+            </a>
+            <a href="{% url 'view_edit_question' question_id=question.question_id %}"
+               class="btn btn-lg btn-secondary">
+              <i class="fas fa-pencil-alt text-success"></i>Edit question
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock sub-content %}
+
+{% block modal %}
+  <!-- Modal Confirm -->
+  <div class="modal fade" id="viewImageModal" tabindex="-1" aria-labelledby="viewImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewImageModalLabel">Image</h5>
+          <span type="button" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-lg" style="font-size: 22px;"></i></span>
+        </div>
+        <div class="modal-body">
+          <img src="/media/images/{{ question.image }}" alt="" style="width: 100%; border-radius: 12px">
+        </div>
+        <div class="modal-footer" style="padding: 10px">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock modal %}
+
+{% block javascript %}
+  <!-- JavaScript to trigger the toast -->
+  <script>
+      {% if add_new_question_success %}
+          document.getElementById('toast-success-content').innerText = 'Add new question successfully!';
+          showToast('toast-success');
+      {% endif %}
+
+      {% if update_question_success %}
+          document.getElementById('toast-success-content').innerText = 'Update question successfully!';
+          showToast('toast-success');
+      {% endif %}
+
+      {% if delete_question_success %}
+          document.getElementById('toast-success-content').innerText = 'Delete question successfully!';
+          showToast('toast-success');
+      {% endif %}
+  </script>
+{% endblock javascript %}

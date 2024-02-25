@@ -1,0 +1,66 @@
+{% extends 'layouts/layout.html' %} 
+{% load static %} 
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="generate-exam">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Schedule the exam</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <form class="row panel-form mx-0" method="post" action="/exam/schedule" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset class="bg-dark-ui">
+            <legend>Subject</legend>
+            <select class="form-control form-select" id="subject" name="subject" onchange="this.form.submit()">
+              <option value="0">Select subject</option>
+              {% for subject in subjects %}
+                <option value="{{ subject.subject_id }}"
+                        {% if subject.subject_id == subject_id %}selected{% endif %}>{{ subject.subject_name }}</option>
+              {% endfor %}
+            </select>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>Exam code</legend>
+            <select class="form-control form-select" id="" name="exam_id">
+              {% if exams %}
+                {% for exam in exams %}
+                  <option value="{{ exam.exam_id }}">{{ exam.exam_code }}</option>
+                {% endfor %}
+              {% else %}
+                <option value="0">No Data</option>
+              {% endif %}
+            </select>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>Start date - time</legend>
+            <input type="datetime-local" class="form-control" name="start_date">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-6 col-lg-6">
+          <fieldset>
+            <legend>End date - time</legend>
+            <input type="datetime-local" class="form-control" name="end_date">
+          </fieldset>
+        </div>
+        <div class="col-md-12 text-end mt-2">
+          <button type="submit" class="btn btn-lg btn-secondary" name="save">
+            <i class="fas fa-check text-success"></i>Submit
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}

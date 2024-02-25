@@ -1,0 +1,179 @@
+{% extends 'layouts/layout.html' %}
+{% load custom_filters %} 
+{% load static %} 
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="add-new-question">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Edit question <span class="text-info">#{{ question.question_id }}</span></h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <form class="row panel-form mx-0" method="post" action="/question/edit" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="hidden" name="question_id" value="{{ question.question_id }}">
+
+        {% if question.image != 'no_image' %}
+          <div class="form-group col-12 col-md-12 col-lg-12">
+            <fieldset class="text-center">
+              <legend>Image view</legend>
+              <div class="pt-2 pb-1">
+                <img src="/media/images/{{ question.image }}" alt="" style="width: 60%; border-radius: 12px">
+              </div>
+            </fieldset>
+          </div>
+        {% endif %}
+
+        <div class="form-group col-12 col-md-8 col-lg-12">
+          <fieldset>
+            <legend>Question</legend>
+            <textarea class="form-control" rows="3" name="question_content">{{ question.question }}</textarea>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-8 col-lg-9">
+          <fieldset class="bg-dark-ui">
+            <legend>Subject</legend>
+            <select class="form-control form-select" id="subject" name="subject">
+              {% for subject in subjects %}
+                <option value="{{ subject.subject_id }}"
+                        {% if subject.subject_id == subject_id %}selected{% endif %}>{{ subject.subject_name }}</option>
+              {% endfor %}
+            </select>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-4 col-lg-3">
+          <fieldset>
+            <legend>Chapter</legend>
+            <input type="text" class="form-control" value="{{ question.unit }}" name="question_unit">
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-8 col-lg-9">
+          <fieldset>
+            <legend>Image</legend>
+            <label for="formFile" class="d-none" style="cursor: pointer; padding-left: 8px; color: var(--secondary-text);">Choose image</label>
+            <input type="file" class="form-control" name="question_image" id="formFile">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-4 col-lg-3">
+          <fieldset>
+            <legend>Mix choices</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="radio" name="mix_choices" id="yes" value="1"
+                       {% if question.mix_choices %}checked{% endif %}>
+                <label class="form-check-label" for="yes">Yes</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input me-2" type="radio" name="mix_choices" id="no" value="0"
+                       {% if not question.mix_choices %}checked{% endif %}>
+                <label class="form-check-label" for="no">No</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        {% for k, v in question.answer_list.items %}
+          <div class="form-group col-12 col-md-12 col-lg-9">
+            <fieldset>
+              <legend>Answer {{ k | upper }}</legend>
+              <input type="text" class="form-control" value="{{ v }}" name="answers">
+            </fieldset>
+          </div>
+          <div class="form-group col-12 col-md-12 col-lg-3">
+            <fieldset>
+              <legend>Correct answer</legend>
+              <div class="custom-radio ps-2">
+                <div class="form-check me-3">
+                  <input class="form-check-input me-2"
+                         type="checkbox"
+                         name="correct_answer" id="{{ k | lower }}"
+                         value="{{ k | lower }}" {% if k|exists:question.answer %}checked{% endif %}>
+                  <label class="form-check-label" for="{{ k | lower }}">Yes</label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        {% endfor %}
+
+        <div class="col-md-12 text-end mt-2">
+          <button type="submit" class="btn btn-lg btn-secondary">
+            <i class="fas fa-check text-success"></i>Submit
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}
+
+{% block modal %}
+  <div class="modal fade" id="viewQuestionModal" tabindex="-1" aria-labelledby="viewQuestionModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered {% if question.image != 'no_image' %}modal-xl{% else %}modal-lg{% endif %}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="viewQuestionModalLabel">Question detail</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          {% if question.image != 'no_image' %}
+              <div class="col-12 col-lg-5">
+                <img src="/media/images/{{ question.image }}" alt="" style="width: 100%; border-radius: 12px">
+              </div>
+          {% endif %}
+            <div class="col-12 {% if question.image != 'no_image' %}col-lg-7 ps-4{% else %}col-lg-12{% endif %}">
+                <table>
+                  <tr>
+                    <td>Question ID:</td>
+                    <td class="ps-3">{{ question.question_id }}</td>
+                  </tr>
+                  <tr>
+                    <td>Subject:</td>
+                    <td class="ps-3">{{ question.subject.subject_code }} - {{ question.subject.subject_name }}</td>
+                  </tr>
+                  <tr>
+                    <td>Question:</td>
+                    <td class="ps-3 color-tan">{{ question.question }}</td>
+                  </tr>
+                  <tr>
+                    <td>Answer list:</td>
+                    <td class="ps-3">
+                      <ul>
+                        {% for k, v in question.answer_list.items %}
+                          <li class="{% if k|exists:question.answer %}text-success{% endif %}">{{ k | upper }}: {{ v }}</li>
+                        {% endfor %}
+                      </ul>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Mark:</td>
+                    <td class="ps-3">{{ question.mark }}</td>
+                  </tr>
+                  <tr>
+                    <td>Unit:</td>
+                    <td class="ps-3">{{ question.unit }}</td>
+                  </tr>
+                  <tr>
+                    <td style="width: 90px">Mix choices:</td>
+                    <td class="ps-3">{{ question.mix_choices }}</td>
+                  </tr>
+                </table>
+              </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="javascript:void(0)" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock modal %}

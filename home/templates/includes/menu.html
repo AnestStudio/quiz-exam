@@ -1,0 +1,60 @@
+{% load static %}
+
+<div class="col-left">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="title fix-mb-title">Tools</h1>
+    </div>
+  </div>
+  <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
+    <ul class="nav navbar-nav sub-menu">
+      <li>
+        <a href="{% url 'upload_document' %}" class="{% if page == 11 %}active{% endif %}">
+          <i class="fas fa-cloud-upload-alt fa-fw"></i>Import question
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
+    <ul class="nav navbar-nav sub-menu">
+      <li>
+        <a href="{% url 'view_list_question' %}" class="{% if page == 21 %}active{% endif %}">
+          <i class="fas fa-list-ul fa-fw"></i>View list of question
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'add_new_question' %}" class="{% if page == 22 %}active{% endif %}">
+          <i class="fas fa-plus fa-fw"></i>Add new question
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
+    <ul class="nav navbar-nav sub-menu">
+      <li>
+        <a href="{% url 'view_list_exam' %}" class="{% if page == 31 %}active{% endif %}">
+          <i class="fas fa-list-ul fa-fw"></i>View list of exam
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'view_generate_exam' %}" class="{% if page == 32 %}active{% endif %}">
+          <i class="fas fa-random fa-fw"></i>Generate exam
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
+    <ul class="nav navbar-nav sub-menu">
+      <li>
+        <a href="{% url 'view_schedule_exam' %}" class="{% if page == 42 %}active{% endif %}">
+          <i class="fas fa-list-ul fa-fw"></i>View list of schedule exam
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'schedule_exam' %}" class="{% if page == 41 %}active{% endif %}">
+          <i class="far fa-calendar-alt fa-fw"></i>Schedule the exam
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

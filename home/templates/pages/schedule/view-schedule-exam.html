@@ -1,0 +1,102 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="exam">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Manage exam schedule</h1>
+        </div>
+      </div>
+
+      <form class="row panel-form mx-0" method="post" action="/exam/schedule/view">
+        {% csrf_token %}
+        <div class="form-group col-12 col-md-8 col-lg-8 flex mb-1 w-100" style="align-items: baseline">
+          <fieldset class="bg-dark-ui">
+            <legend>Subject</legend>
+            <select class="form-control form-select" id="subject" name="subject">
+              <option value="0">Select subject</option>
+              {% for subject in subjects %}
+                <option value="{{ subject.subject_id }}"
+                        {% if subject.subject_id == subject_id %}selected{% endif %}>{{ subject.subject_name }}</option>
+              {% endfor %}
+            </select>
+          </fieldset>
+          <button type="submit" class="btn btn-lg btn-secondary">
+            <i class="bi bi-search text-success"></i>View list of exam schedule
+          </button>
+        </div>
+      </form>
+
+      {% if exams %}
+        <!-- Content -->
+        <div class="panel">
+          <div class="row datatable">
+            <div class="col-lg-12">
+              <table id="exam-table" class="table" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th class="text-center">Exam code<i class="fas fa-sort fa-size"></i></th>
+                  <th class="text-center">Duration</th>
+                  <th class="text-center">Number of question</th>
+                  <th class="text-center">Create at<i class="fas fa-sort fa-size"></i></th>
+                  <th class="text-end">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for e in exams %}
+                  <tr>
+                    <td class="text-center">{{ forloop.counter }}</td>
+                    <td class="text-center">{{ e.exam_code }}</td>
+                    <td class="text-center">{{ e.exam_duration }}</td>
+                    <td class="text-center">{{ e.question_count }}</td>
+                    <td class="text-center">
+                      <i class="bi bi-calendar3-week fa-fw me-2"></i>{{ e.created_at|date:"d/m/Y" }}
+                      <i class="far fa-clock fa-fw ms-1 me-1"></i>{{ e.created_at|time:"H:i:s" }}
+                    </td>
+                    <td class="text-end">
+                      <a href="{% url 'view_detail_schedule_exam' exam_id=e.exam_id %}" class="text-info">
+                        <i class="far fa-eye" data-bs-placement="top" data-bs-toggle="tooltip" title="View detail"></i>
+                      </a>
+                    </td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      {% elif exams == '' %}
+        <div class="panel-text py-3" style="height: 316px">
+          <div class="row">
+            <div class="col-lg-12">Select <span class="color-tan">Subject</span> to view list of exams.</div>
+          </div>
+        </div>
+      {% else %}
+        <div class="panel-text py-3" style="height: 316px">
+          <div class="row">
+            <div class="col-lg-12">No data found.</div>
+          </div>
+        </div>
+      {% endif %}
+    
+    </div>
+  </div>
+
+{% endblock sub-content %}
+
+{% block javascript %}
+  <script src="{% static 'assets/js/datatables/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'assets/js/datatables/datatables.vietnamese.js' %}"></script>
+  <script>
+      {% if add_success %}
+          document.getElementById('toast-success-content').innerText = 'Add schedule exam successfully!';
+          showToast('toast-success');
+      {% endif %}
+  </script>
+{% endblock javascript %}

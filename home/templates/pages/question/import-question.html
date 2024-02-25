@@ -1,0 +1,39 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="import-question">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Import question</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="panel" style="min-height: 425px">
+        <div class="row">
+          <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="d-flex">
+                <div>
+                  {{ form }}
+                </div>
+                <div>
+                  <button type="submit" class="btn btn-md btn-secondary ms-3">
+                    <i class="fas fa-cloud-upload-alt me-1 text-info"></i> Import file
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}

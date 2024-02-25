@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Online System</title>
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap/bootstrap-icons.css' %}">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/grid.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/color.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/quiz.css' %}">
+</head>
+
+<body>
+
+  {% block header %}
+    {% include 'includes/navigation.html' %}
+  {% endblock header %}
+
+  {% block content %}{% endblock content %}
+
+  {% block footer %}
+    {% include 'includes/footer.html' %}
+  {% endblock footer %}
+
+  {% include 'includes/scripts.html' %}
+  
+  {% block javascript %}{% endblock javascript %}
+
+</body>
+
+</html>

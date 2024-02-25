@@ -1,0 +1,34 @@
+#id_file {
+    height: 39px;
+}
+
+.view-question-table tbody,
+.view-question-table td,
+.view-question-table tfoot,
+.view-question-table th,
+.view-question-table thead,
+.view-question-table tr {
+  border-bottom: 1px solid var(--secondary-border-color);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.view-exam-question-table tbody,
+.view-exam-question-table td,
+.view-exam-question-table tfoot,
+.view-exam-question-table th,
+.view-exam-question-table thead,
+.view-exam-question-table tr {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.link-disable {
+  opacity: 0.6 !important;
+  cursor: default;
+}
+
+.link-disable:hover {
+  box-shadow: none !important;
+  border-color: transparent !important;
+}

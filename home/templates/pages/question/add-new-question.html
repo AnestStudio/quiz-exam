@@ -1,0 +1,153 @@
+{% extends 'layouts/layout.html' %} 
+{% load static %} 
+
+{% block sub-content %}
+
+  <div class="col-right">
+    <div class="add-new-question">
+      <!-- Title -->
+      <div class="row">
+        <div class="col-12">
+          <h1 class="title fix-mb-title">Add new question</h1>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <form class="row panel-form mx-0" action="/question/add" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group col-12 col-md-12 col-lg-12">
+          <fieldset>
+            <legend>Question</legend>
+            <textarea class="form-control" rows="3" name="question_content"></textarea>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-8 col-lg-9">
+          <fieldset class="bg-dark-ui">
+            <legend>Subject</legend>
+            <select class="form-control form-select" id="subject" name="subject">
+              {% for subject in subjects %}
+                <option value="{{ subject.subject_id }}">{{ subject.subject_name }}</option>
+              {% endfor %}
+            </select>
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-4 col-lg-3">
+          <fieldset>
+            <legend>Chapter</legend>
+            <input type="text" class="form-control" name="question_unit" placeholder="Chapter 1">
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-8 col-lg-9">
+          <fieldset>
+            <legend>Image</legend>
+            <label for="formFile" class="d-none" style="cursor: pointer; padding-left: 8px; color: var(--secondary-text);">Choose image</label>
+            <input type="file" class="form-control" name="question_image" id="formFile">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-4 col-lg-3">
+          <fieldset>
+            <legend>Mix choices</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="radio" name="mix_choices" id="yes" value="1" checked>
+                <label class="form-check-label" for="yes">Yes</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input me-2" type="radio" name="mix_choices" id="no" value="0">
+                <label class="form-check-label" for="no">No</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-12 col-lg-9">
+          <fieldset>
+            <legend>Answer A</legend>
+            <input type="text" class="form-control" name="answers">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-12 col-lg-3">
+          <fieldset>
+            <legend>Correct answer</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="checkbox" name="correct_answer" id="a" value="a">
+                <label class="form-check-label" for="a">Yes</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-12 col-lg-9">
+          <fieldset>
+            <legend>Answer B</legend>
+            <input type="text" class="form-control" name="answers">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-12 col-lg-3">
+          <fieldset>
+            <legend>Correct answer</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="checkbox" name="correct_answer" id="b" value="b">
+                <label class="form-check-label" for="b">Yes</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-12 col-lg-9">
+          <fieldset>
+            <legend>Answer C</legend>
+            <input type="text" class="form-control" name="answers">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-12 col-lg-3">
+          <fieldset>
+            <legend>Correct answer</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="checkbox" name="correct_answer" id="c" value="c">
+                <label class="form-check-label" for="c">Yes</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="form-group col-12 col-md-12 col-lg-9">
+          <fieldset>
+            <legend>Answer D</legend>
+            <input type="text" class="form-control" name="answers">
+          </fieldset>
+        </div>
+        <div class="form-group col-12 col-md-12 col-lg-3">
+          <fieldset>
+            <legend>Correct answer</legend>
+            <div class="custom-radio ps-2">
+              <div class="form-check me-3">
+                <input class="form-check-input me-2" type="checkbox" name="correct_answer" id="d" value="d">
+                <label class="form-check-label" for="d">Yes</label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      
+        <div id="add_more_answer"></div>
+
+        <div class="col-md-12 text-end mt-2">
+          <button type="submit" class="btn btn-lg btn-secondary me-2">
+            <i class="fas fa-plus text-info"></i>Add answer
+          </button>
+          <button type="submit" class="btn btn-lg btn-secondary">
+            <i class="fas fa-check text-success"></i>Submit
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+{% endblock sub-content %}

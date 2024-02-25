@@ -1,0 +1,43 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <main>
+
+    <div style="overflow: hidden;">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <div class="col-right">
+              <div class="panel-text p-4">
+                <!-- Title -->
+                <div class="row">
+                  <div class="col-12">
+                    <h1 class="title fix-mb-title">Welcome to Quiz online system</h1>
+                    {% if request.user.is_authenticated %}
+                      <h4 class="mb-0">
+                        <a href="{% url 'upload_document' %}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
+{#                        <p>#}
+{#                          {% if 'add_question' in user_permissions %}#}
+{#                            xxx#}
+{#                          {% else %}#}
+{#                            ccc#}
+{#                          {% endif %}#}
+{#                        </p>#}
+                      </h4>
+                    {% else %}
+                      <a href="{% url 'login' %}" class="btn btn-lg btn-secondary mb-1">Đăng nhập</a>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+{% endblock content %}
