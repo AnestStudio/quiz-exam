@@ -1,5 +1,6 @@
 INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (1, 'pbkdf2_sha256$390000$9qZMLuV3bvoPwnHki6jgCO$K6eXBoM+Z7B4jLNLvmN2q6h/vpCFq54o/pmhI82k08Y=', '2024-02-22 10:24:06.686720', 1, 'admin', 'Tuấn', 'Anh', 'admin@gmail.com', 1, 1, '2024-02-22 10:01:20.000000');
 INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (2, 'pbkdf2_sha256$390000$64zzQ0UAm9EWnXPtCXr2Np$xgttUxGOZbQB7Q+GhX0JBTJdD4cRQT5OqfPzhDlJuZg=', '2024-02-22 13:00:57.742028', 0, 'user01', 'Tuấn Anh', 'Đinh', 'anhdt@gmail.com', 0, 1, '2024-02-22 10:04:16.000000');
+INSERT INTO auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) VALUES (3, 'pbkdf2_sha256$390000$64zzQ0UAm9EWnXPtCXr2Np$xgttUxGOZbQB7Q+GhX0JBTJdD4cRQT5OqfPzhDlJuZg=', '2024-02-22 13:00:57.742028', 0, 'user02', 'Hoang Anh', 'To', 'anhth@gmail.com', 0, 1, '2024-02-22 10:04:16.000000');
 
 
 INSERT INTO home_subject (subject_id, subject_code, subject_name) VALUES (1, 'CSI104', 'Introduction to Computer Science');
@@ -15,6 +16,9 @@ INSERT INTO home_subject (subject_id, subject_code, subject_name) VALUES (8, 'WD
 INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (1, 1, 2);
 INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (2, 2, 2);
 INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (3, 3, 2);
+INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (4, 4, 3);
+INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (5, 5, 3);
+INSERT INTO home_usersubject (id, subject_id, user_id) VALUES (6, 6, 3);
 
 
 INSERT INTO home_question (question_id, question, answer_list, answer, mark, unit, mix_choices, image, subject_id) VALUES (1, 'What is the capital of France?', '{"a": "Paris", "b": "London", "c": "Berlin", "d": "Madrid"}', '["a"]', 0.50, 'Chapter 1', 1, 'DSCF1720.JPG', 1);
