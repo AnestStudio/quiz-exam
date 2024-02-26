@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% load custom_filters %}
 {% load static %}
 
 {% block content %}
@@ -18,14 +19,17 @@
                     {% if request.user.is_authenticated %}
                       <h4 class="mb-0">
                         <a href="{% url 'upload_document' %}">{{ request.user.first_name }} {{ request.user.last_name }}</a>
-{#                        <p>#}
-{#                          {% if 'add_question' in user_permissions %}#}
-{#                            xxx#}
-{#                          {% else %}#}
-{#                            ccc#}
-{#                          {% endif %}#}
-{#                        </p>#}
+                        {#                        <p>#}
+                        {#                          {% if 'add_question' in user_permissions %}#}
+                        {#                            xxx#}
+                        {#                          {% else %}#}
+                        {#                            ccc#}
+                        {#                          {% endif %}#}
+                        {#                        </p>#}
                       </h4>
+                      {% for role in request.user|get_user_permissions %}
+                        <p class="m-0"> {{ role }} </p>
+                      {% endfor %}
                     {% else %}
                       <a href="{% url 'login' %}" class="btn btn-lg btn-secondary mb-1">Đăng nhập</a>
                     {% endif %}

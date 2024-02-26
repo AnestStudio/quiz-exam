@@ -26,15 +26,7 @@ from .models import Question, Subject, Exam, ExamQuestion, SubjectExam, ExamSche
 
 # Pages
 def index(request):
-    if request.user.is_authenticated:
-        user_permissions = request.user.user_permissions.all()
-        code_names = [permission.codename for permission in user_permissions]
-        context = {
-            'user_permissions': code_names
-        }
-        return render(request, 'pages/index.html', context)
-    else:
-        return render(request, 'pages/index.html')
+    return render(request, 'pages/index.html')
 
 
 class UserLoginView(LoginView):
