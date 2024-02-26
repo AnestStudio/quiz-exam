@@ -1,30 +1,25 @@
 import ast
 import copy
+import datetime
 import json
 import os
 import random
 import string
-import datetime
+from datetime import datetime
 
 from django.conf import settings
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.db.models import Count, OuterRef, Subquery
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.db.models import OuterRef, Subquery
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.urls import reverse
+from docx import Document as DocxDocument
 
 from home.forms import RegistrationForm, UserLoginForm, UserPasswordResetForm, UserPasswordChangeForm, \
     UserSetPasswordForm
-from django.contrib.auth import logout
-
-from docx import Document as DocxDocument
-
-from .models import Question, Subject, Exam, ExamSchedule
-
-from datetime import datetime
-
 from .forms import DocumentForm
 from .models import Question, Subject, Exam, ExamQuestion, SubjectExam, ExamSchedule
 

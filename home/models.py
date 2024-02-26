@@ -6,6 +6,9 @@ class Document(models.Model):
     file = models.FileField(upload_to='documents/')
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        abstract = True
+
 
 class Subject(models.Model):
     subject_id = models.AutoField(primary_key=True)
