@@ -93,10 +93,4 @@
   <script src="{% static 'assets/js/datatables/jquery.min.js' %}"></script>
   <script src="{% static 'assets/js/datatables/jquery.dataTables.min.js' %}"></script>
   <script src="{% static 'assets/js/datatables/datatables.vietnamese.js' %}"></script>
-  <script>
-      {% if add_success %}
-          document.getElementById('toast-success-content').innerText = 'Add schedule exam successfully!';
-          showToast('toast-success');
-      {% endif %}
-  </script>
 {% endblock javascript %}
