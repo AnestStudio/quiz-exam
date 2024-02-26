@@ -635,13 +635,15 @@ def schedule_exam(request):
                                                         start_time=datetime.strptime(start_date_get, '%Y-%m-%dT%H:%M'),
                                                         end_time=datetime.strptime(end_date_get, '%Y-%m-%dT%H:%M'))
             exam_schedule.save()
-            add_success = True
+            exam_schedules = ExamSchedule.objects.filter(exam_id=exam_schedule.exam_id)
+            subject_exam = SubjectExam.objects.get(exam_id=exam_schedules[0].exam.exam_id)
             data = {
-                'subject_id': int(subject_id),
-                'subjects': subjects,
-                'add_success': add_success
+                'exam_schedules': exam_schedules,
+                'subject_exam': subject_exam,
+                'add_success': True,
+                'page': 42
             }
-            return render(request, 'pages/schedule/view-schedule-exam.html', data)
+            return render(request, 'pages/schedule/view_detail_schedule.html', data)
         elif 'subject' in request.POST:
             subject_id = request.POST.get('subject')
             if subject_id:
@@ -742,11 +744,11 @@ def edit_schedule_exam(request):
 
 @login_required()
 def delete_schedule_exam(request, exam_id, schedule_id):
-    ExamSchedule.objects.filter(schedule_id=schedule_id).delete()
-
-    exam_schedules = ExamSchedule.objects.filter(exam_id=exam_id)
+    exam_schedules = None
+    if ExamSchedule.objects.filter(exam_id=exam_id) is not None:
+        exam_schedules = ExamSchedule.objects.filter(exam_id=exam_id)
     subject_exam = SubjectExam.objects.get(exam_id=exam_schedules[0].exam.exam_id)
-
+    ExamSchedule.objects.filter(schedule_id=schedule_id).delete()
     data = {
         'exam_schedules': exam_schedules,
         'subject_exam': subject_exam,

@@ -65,7 +65,7 @@
           <h1 class="sub-title fix-mb-title fix-mt-title">Time list</h1>
         </div>
       </div>
-
+      {% if exam_schedules %}
       <div class="panel pt-1">
         <div class="row">
           <div class="col-12">
@@ -114,6 +114,13 @@
           </div>
         </div>
       </div>
+      {% else %}
+        <div class="panel-text py-3" style="height: 316px">
+          <div class="row">
+            <div class="col-lg-12">No data found.</div>
+          </div>
+        </div>
+      {% endif %}
 
     </div>
   </div>
@@ -127,6 +134,10 @@
       {% endif %}
       {% if delete_schedule_exam_success %}
           document.getElementById('toast-success-content').innerText = 'Delete schedule exam successfully!';
+          showToast('toast-success');
+      {% endif %}
+      {% if add_success %}
+          document.getElementById('toast-success-content').innerText = 'Add schedule exam successfully!';
           showToast('toast-success');
       {% endif %}
   </script>
