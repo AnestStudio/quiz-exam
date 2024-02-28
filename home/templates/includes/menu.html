@@ -18,23 +18,20 @@
     </ul>
   </div>
   {% endif %}
-  {% if 'add_question' in request.user|get_user_permissions and 'change_question' in request.user|get_user_permissions and 'delete_question' in request.user|get_user_permissions and 'view_question' in request.user|get_user_permissions %}
-    <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
-      <ul class="nav navbar-nav sub-menu">
-        <li>
-          <a href="{% url 'view_list_question' %}" class="{% if page == 21 %}active{% endif %}">
-            <i class="fas fa-list-ul fa-fw"></i>View list of question
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'add_new_question' %}" class="{% if page == 22 %}active{% endif %}">
-            <i class="fas fa-plus fa-fw"></i>Add new question
-          </a>
-        </li>
-      </ul>
-    </div>
-  {% endif %}
-  {% if 'add_exam' in request.user|get_user_permissions and 'change_exam' in request.user|get_user_permissions and 'delete_exam' in request.user|get_user_permissions and 'view_exam' in request.user|get_user_permissions %}
+  <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
+    <ul class="nav navbar-nav sub-menu">
+      <li>
+        <a href="{% url 'view_list_question' %}" class="{% if page == 21 %}active{% endif %}">
+          <i class="fas fa-list-ul fa-fw"></i>View list of question
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'add_new_question' %}" class="{% if page == 22 %}active{% endif %}">
+          <i class="fas fa-plus fa-fw"></i>Add new question
+        </a>
+      </li>
+    </ul>
+  </div>
   <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
     <ul class="nav navbar-nav sub-menu">
       <li>
@@ -49,8 +46,6 @@
       </li>
     </ul>
   </div>
-  {% endif %}
-  {% if 'add_examschedule' in request.user|get_user_permissions and 'change_examschedule' in request.user|get_user_permissions and 'delete_examschedule' in request.user|get_user_permissions and 'view_examschedule' in request.user|get_user_permissions %}
   <div class="sidebar-group-menu primary-background border-radius-3 mb-3">
     <ul class="nav navbar-nav sub-menu">
       <li>
@@ -65,5 +60,4 @@
       </li>
     </ul>
   </div>
-  {% endif %}
 </div>

@@ -9,11 +9,11 @@ from datetime import datetime
 
 from django.conf import settings
 from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.db.models import OuterRef, Subquery
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from docx import Document as DocxDocument
@@ -166,6 +166,7 @@ def __insert_question_list_to_db(data_list):
 # MANAGE QUESTION ------------------------------------------------------------------------------------------------------
 
 @login_required
+@permission_required("home.view_question", raise_exception=True)
 def view_list_question(request):
     subjects = __get_subject_list_by_user(request.user.id)
     subject_id = 0
@@ -193,6 +194,7 @@ def view_list_question(request):
 
 
 @login_required
+@permission_required("home.view_question", raise_exception=True)
 def view_question(request, question_id):
     subjects = __get_subject_list_by_user(request.user.id)
     question = Question.objects.get(question_id=question_id)
@@ -210,6 +212,7 @@ def view_question(request, question_id):
 
 
 @login_required
+@permission_required("home.add_question", raise_exception=True)
 def add_new_question(request):
     subjects = __get_subject_list_by_user(request.user.id)
 
@@ -263,6 +266,7 @@ def add_new_question(request):
 
 
 @login_required
+@permission_required("home.delete_question", raise_exception=True)
 def delete_question(request, question_id):
     subjects = __get_subject_list_by_user(request.user.id)
     question = Question.objects.get(question_id=question_id)
@@ -299,6 +303,7 @@ def check_question_in_exam(request, question_id):
 
 
 @login_required
+@permission_required("home.change_question", raise_exception=True)
 def view_edit_question(request, question_id):
     subjects = __get_subject_list_by_user(request.user.id)
     question = Question.objects.get(question_id=question_id)
@@ -316,6 +321,7 @@ def view_edit_question(request, question_id):
 
 
 @login_required
+@permission_required("home.change_question", raise_exception=True)
 def edit_question(request):
     if request.method == 'POST':
         subject_id = request.POST.get('subject')
@@ -517,7 +523,8 @@ def generate_exam(request):
             )
             for q in (list(list_question_reselect) + random_list_question):
                 if q.mix_choices:
-                    dict_answer_random = __convert_answer_list_to_dict(__random_dict_value_position(eval(q.answer_list)))
+                    dict_answer_random = __convert_answer_list_to_dict(
+                        __random_dict_value_position(eval(q.answer_list)))
                     list_correct_answer_new = __get_correct_list_answer_new(
                         eval(q.answer_list),
                         dict_answer_random,
