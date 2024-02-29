@@ -65,7 +65,16 @@
             </div>
           </div>
         </li>
-        <li><a href="#"><i class="far fa-file-code fa-fw"></i>SQL Formatter</a></li>
+        <li>
+          <a href="{% url 'view_list_question' %}" class="{% if page == 21 %}active{% endif %}">
+            <i class="fas fa-list-ul fa-fw"></i>View list of question
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'add_new_question' %}" class="{% if page == 22 %}active{% endif %}">
+            <i class="fas fa-plus fa-fw"></i>Add new question
+          </a>
+        </li>
       </ul>
     </div>
     <!-- End: Sidebar -->
